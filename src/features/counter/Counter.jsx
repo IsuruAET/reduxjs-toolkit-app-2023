@@ -8,17 +8,18 @@ import Stack from "@mui/material/Stack";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
 import Refresh from "@mui/icons-material/Refresh";
-// Import redux hooks
-// Import counter actions
+import { useSelector, useDispatch } from "react-redux";
+import { increment, decrement, reset, multiplyByAmount } from "./counterSlice";
 
 export default function Counter() {
   const [multiplyAmount, setMultiplyAmount] = React.useState(0);
 
-  // Get counter state
-  // Initialize dispatch method
+  const count = useSelector((state) => state.counter.count);
+  const dispatch = useDispatch();
 
   const resetAll = () => {
     setMultiplyAmount(0);
+    dispatch(reset());
   };
 
   return (
@@ -40,7 +41,7 @@ export default function Counter() {
           />
 
           <Button
-            onClick={() => {}} // ToDo Multiply by amount
+            onClick={() => dispatch(multiplyByAmount(multiplyAmount))} // ToDo Multiply by amount
             fullWidth
             variant="contained"
           >
@@ -49,18 +50,18 @@ export default function Counter() {
         </Box>
 
         <Typography component="p" variant="h1">
-          {0}
+          {count}
         </Typography>
 
         <Stack direction="row" mt={2} spacing={2}>
           <Button
-            onClick={() => {}} // ToDo Decrement
+            onClick={() => dispatch(decrement())} // ToDo Decrement
             variant="contained"
           >
             <Remove />
           </Button>
           <Button
-            onClick={() => {}} // ToDo Increment
+            onClick={() => dispatch(increment())} // ToDo Increment
             variant="contained"
           >
             <Add />
